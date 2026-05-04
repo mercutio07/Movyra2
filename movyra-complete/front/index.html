@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movyra • Base Saine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="flex flex-col items-center justify-center p-6 min-h-screen">
+
+    <!-- Halo de fond -->
+    <div id="bg-glow"></div>
+
+    <!-- Header fixe -->
+    <header class="fixed top-0 w-full p-6 flex justify-between items-center z-50">
+        <span class="font-serif text-2xl tracking-tighter text-[#e8b457]">Movyra</span>
+    </header>
+
+    <main id="app-container" class="w-full max-w-lg z-10">
+
+        <!-- ÉTAPE 0 : CHOIX DU MÉDIA (nouvelle étape) -->
+        <section id="step-media" class="step text-center space-y-8">
+            <h1 class="font-serif text-5xl leading-tight">Ce soir,<br><span class="text-[#e8b457]">quel média ?</span></h1>
+            <div id="media-grid" class="grid grid-cols-1 gap-4">
+                <!-- Injecté par app.js via renderMediaGrid() -->
+            </div>
+        </section>
+
+        <!-- ÉTAPE 1 : CONTEXTE — inchangée -->
+        <section id="step-context" class="step text-center space-y-8">
+            <h1 class="font-serif text-5xl leading-tight">Avec qui<br><span class="text-[#e8b457]">regardez-vous ?</span></h1>
+            <div class="grid grid-cols-1 gap-4">
+                <button onclick="App.setContext('solo')" class="btn-choice glass p-6 rounded-xl text-left">
+                    <span class="block text-lg">Solo</span>
+                    <span class="text-[10px] opacity-50 uppercase tracking-widest">Mon moment à moi</span>
+                </button>
+                <button onclick="App.setContext('kids')" class="btn-choice glass p-6 rounded-xl text-left">
+                    <span class="block text-lg">En famille</span>
+                    <span class="text-[10px] opacity-50 uppercase tracking-widest">Avec les enfants 🐣</span>
+                </button>
+                <button onclick="App.setContext('couple')" class="btn-choice glass p-6 rounded-xl text-left">
+                    <span class="block text-lg">En couple</span>
+                    <span class="text-[10px] opacity-50 uppercase tracking-widest">Soirée à deux</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ÉTAPE 2 : VIBES — inchangée, contenu injecté par app.js -->
+        <section id="step-vibe" class="step text-center space-y-8">
+            <h2 class="font-serif text-4xl">Quelle est <span class="text-[#e8b457]">l'ambiance ?</span></h2>
+            <div id="vibe-grid" class="grid grid-cols-2 gap-4"></div>
+        </section>
+
+        <!-- ÉTAPE 3 : FILTRE — générique (remplace step-duration) -->
+        <section id="step-duration" class="step text-center space-y-8">
+            <h2 class="font-serif text-4xl" id="filter-title">Combien de temps ?</h2>
+            <div id="filter-options" class="grid grid-cols-1 gap-4">
+                <!-- Injecté par app.js via renderFilterOptions() -->
+            </div>
+        </section>
+
+        <!-- ÉTAPE 4 : CHARGEMENT — inchangée -->
+        <section id="step-loading" class="step text-center space-y-12">
+            <div class="flex justify-center"><div class="loader"></div></div>
+            <h2 class="font-serif text-3xl text-[#e8b457] animate-pulse">Analyse de vos envies...</h2>
+        </section>
+
+        <!-- ÉTAPE 5 : RÉSULTATS — titre dynamique via results-title -->
+        <section id="step-results" class="step text-center space-y-8">
+            <h2 class="font-serif text-4xl" id="results-title">Tes 3 sélections ce soir</h2>
+            <div id="movie-results-container" class="space-y-4 text-left"></div>
+            <div class="pt-8">
+                <button onclick="App.reset()" class="text-xs opacity-30 uppercase tracking-[0.3em] hover:opacity-100 transition-opacity">Recommencer l'expérience</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Chargement des scripts dans l'ordre -->
+    <script src="data/movies.js"></script>
+    <script src="data/books.js"></script>
+    <!-- <script src="data/music.js"></script> -->
+    <!-- <script src="data/comics.js"></script> -->
+    <script src="data/index.js"></script>
+    <script src="recommender.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

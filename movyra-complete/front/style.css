@@ -1,0 +1,231 @@
+/**
+ * style.css — Movyra Front-End
+ * Dark cinema aesthetic · Gold accents · Glassmorphism
+ */
+
+/* ─── Google Fonts ─────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* ─── Variables ────────────────────────────────────────────────────────────── */
+:root {
+  --bg:        #09090f;
+  --surface:   rgba(255, 255, 255, 0.04);
+  --border:    rgba(255, 255, 255, 0.08);
+  --gold:      #e8b457;
+  --gold-glow: rgba(232, 180, 87, 0.15);
+  --text:      #e8e6e0;
+  --muted:     rgba(232, 230, 224, 0.45);
+  --radius:    16px;
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Reset & Base ─────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ─── Typographie ──────────────────────────────────────────────────────────── */
+.font-serif {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+/* ─── Fond animé — grain + halo ────────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+#bg-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  transition: background var(--transition);
+  will-change: background;
+}
+
+/* ─── Étapes (steps) ───────────────────────────────────────────────────────── */
+.step {
+  display: none;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.step.active {
+  display: block;
+  animation: stepIn 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes stepIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Verre (glassmorphism) ────────────────────────────────────────────────── */
+.glass {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ─── Boutons de choix ─────────────────────────────────────────────────────── */
+.btn-choice {
+  width: 100%;
+  cursor: pointer;
+  color: var(--text);
+  text-align: left;
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition);
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-choice::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(232, 180, 87, 0.06), transparent);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.btn-choice:hover {
+  border-color: rgba(232, 180, 87, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(232, 180, 87, 0.1);
+}
+
+.btn-choice:hover::before {
+  opacity: 1;
+}
+
+.btn-choice:active {
+  transform: translateY(0px);
+  transition-duration: 0.1s;
+}
+
+/* ─── Loader animé ─────────────────────────────────────────────────────────── */
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--border);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Cartes résultats ─────────────────────────────────────────────────────── */
+#movie-results-container .glass {
+  transition: transform var(--transition), box-shadow var(--transition);
+  animation: cardIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+#movie-results-container .glass:nth-child(1) { animation-delay: 0.05s; }
+#movie-results-container .glass:nth-child(2) { animation-delay: 0.15s; }
+#movie-results-container .glass:nth-child(3) { animation-delay: 0.25s; }
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#movie-results-container .glass:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* ─── Header ───────────────────────────────────────────────────────────────── */
+header {
+  background: linear-gradient(to bottom, rgba(9, 9, 15, 0.9), transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ─── Poster (résultats avec TMDB) ────────────────────────────────────────── */
+.movie-poster {
+  width: 64px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  background: var(--surface);
+}
+
+/* ─── Scrollbar ────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(232, 180, 87, 0.3);
+}
+
+/* ─── Sélection texte ──────────────────────────────────────────────────────── */
+::selection {
+  background: var(--gold-glow);
+  color: var(--gold);
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .font-serif.text-5xl {
+    font-size: 2.4rem;
+  }
+
+  .btn-choice {
+    padding: 1.1rem 1.25rem;
+  }
+}
