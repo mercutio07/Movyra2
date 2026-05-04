@@ -147,9 +147,6 @@ const Recommender = {
      * @returns {Array}        — films avec `why` mis à jour
      */
     async generatePersonalizedWhys(films, state) {
-        // ── PATCH DEV : appel Claude désactivé — why statiques utilisés ──
-        // Retirer ce return quand le back est connecté (T01 + T02)
-        return films;
         const vibeLabel    = VIBE_LABELS[state.vibe]    ?? state.vibe;
         const contextLabel = CONTEXT_LABELS[state.context] ?? state.context;
         const filterLabel  = state.filter === 'short'
